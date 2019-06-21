@@ -19,6 +19,10 @@ class MySpecialSnowflakeController
 
         flash('My message', 'my-class');
 
+        // or 
+
+        flash(['My message', 'My message'], 'my-class');
+
         return back();
     }
 }
@@ -29,7 +33,15 @@ In your view you can do this:
 ```blade
 @if(flash()->message)
     <div class="{{ flash()->class }}">
-        {{ flash()->message }}
+        @if (!is_array($message))
+            {!! $message !!}
+        @else
+            <ul>
+                @foreach ($message as $msg)
+                    <li>{!! $msg !!}</li>  
+                @endforeach
+            </ul>
+        @endif
     </div>
 @endif
 ```
@@ -39,7 +51,7 @@ In your view you can do this:
 You can install the package via composer:
 
 ```bash
-composer require spatie/laravel-flash
+composer require futuresoft/laravel-flash
 ```
 
 ## Usage
@@ -65,11 +77,24 @@ In your view you can use it like this
 ```blade
 @if(flash()->message)
     <div>
-        {{ flash()->message }}
+        @if (!is_array($message))
+            {!! $message !!}
+        @else
+            <ul>
+                @foreach ($message as $msg)
+                    <li>{!! $msg !!}</li>  
+                @endforeach
+            </ul>
+        @endif
     </div>
 @endif
 ```
 
+You can also set an array of messages.
+
+```php
+flash(['My message', 'My message']));
+```
 
 ### Using a class name to style the displayed message
 
@@ -94,7 +119,15 @@ In your view you can use the class like this:
 ```blade
 @if(flash()->message)
     <div class="{{ flash()->class }}">
-        {{ flash()->message }}
+        @if (!is_array($message))
+            {!! $message !!}
+        @else
+            <ul>
+                @foreach ($message as $msg)
+                    <li>{!! $msg !!}</li>  
+                @endforeach
+            </ul>
+        @endif
     </div>
 @endif
 ```

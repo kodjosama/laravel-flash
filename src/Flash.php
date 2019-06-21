@@ -18,9 +18,9 @@ class Flash
         $this->session = $session;
     }
 
-    public function __get(string $name)
+    public function __get($name)
     {
-        return $this->getMessage()->$name ?? null;
+        return $this->getMessage()->{$name} ?? null;
     }
 
     public function getMessage(): ?Message
@@ -39,7 +39,7 @@ class Flash
         if ($message->class && static::hasMacro($message->class)) {
             $methodName = $message->class;
 
-            $this->$methodName($message->message);
+            $this->{$methodName}($message->message);
 
             return;
         }
@@ -55,7 +55,7 @@ class Flash
     public static function levels(array $methodClasses): void
     {
         foreach ($methodClasses as $method => $classes) {
-            self::macro($method, function (string $message) use ($classes) {
+            self::macro($method, function ($message) use ($classes) {
                 return $this->flashMessage(new Message($message, $classes));
             });
         }
