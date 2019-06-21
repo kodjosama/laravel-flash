@@ -4,15 +4,15 @@ use Spatie\Flash\Flash;
 use Spatie\Flash\Message;
 
 /**
- * @param string $text
- * @param string|array $class
+ * @param array|string $text
+ * @param array|string $class
  */
-function flash(string $text = null, $class = null): Flash
+function flash($text = null, $class = null): Flash
 {
     /** @var \Spatie\Flash\Flash $flash */
     $flash = app(Flash::class);
 
-    if (is_null($text)) {
+    if (null === $text) {
         return $flash;
     }
 
